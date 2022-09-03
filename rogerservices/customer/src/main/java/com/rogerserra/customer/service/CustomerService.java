@@ -1,8 +1,9 @@
 package com.rogerserra.customer.service;
 
+import com.rogerserra.clients.fraud.FraudCheckResponse;
+import com.rogerserra.clients.fraud.FraudClient;
 import com.rogerserra.customer.entity.Customer;
 import com.rogerserra.customer.entity.record.CustomerRegistrationRequest;
-import com.rogerserra.customer.entity.record.FraudCheckResponse;
 import com.rogerserra.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -26,14 +28,10 @@ public class CustomerService {
         customerRepository.saveAndFlush(customer); // so we can have access to the customer id
         // sin save and flush el ID VA A SER NULO
         // todo: check if fraudster
-        // esto envia el ID a la ruta especificada, y alli el controlador de Fraud ya se encarga de enviar al servicio
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
 
-        );
-        // FRAUD EN MAYUSCULA es porque es el nombre de la aplicacion en localhost:8761, en la consola de eureka server, es en MAYUSCULA
+        FraudCheckResponse fraudCheckResponse =
+                fraudClient.isFraudster(customer.getId());
+
         if(fraudCheckResponse.isFraudster()){
             throw new IllegalStateException("fraudster");
         }

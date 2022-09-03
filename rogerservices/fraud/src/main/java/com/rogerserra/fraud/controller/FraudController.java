@@ -1,6 +1,6 @@
 package com.rogerserra.fraud.controller;
 
-import com.rogerserra.fraud.entity.record.FraudCheckResponse;
+import com.rogerserra.clients.fraud.FraudCheckResponse;
 import com.rogerserra.fraud.service.FraudCheckService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
