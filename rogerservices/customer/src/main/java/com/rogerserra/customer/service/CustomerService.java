@@ -28,11 +28,12 @@ public class CustomerService {
         // todo: check if fraudster
         // esto envia el ID a la ruta especificada, y alli el controlador de Fraud ya se encarga de enviar al servicio
         FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://localhost:8081/api/v1/fraud-check/{customerId}",
+                "http://FRAUD/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,
                 customer.getId()
 
         );
+        // FRAUD EN MAYUSCULA es porque es el nombre de la aplicacion en localhost:8761, en la consola de eureka server, es en MAYUSCULA
         if(fraudCheckResponse.isFraudster()){
             throw new IllegalStateException("fraudster");
         }
