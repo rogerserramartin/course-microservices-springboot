@@ -29,6 +29,12 @@ services:
       - postgres # este es el nombre de cuando vamos a pgadmin, add new server, host name/address
     restart: unless-stopped
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
 networks: # para que los contenedores hablen entre si
   postgres:
     driver: bridge
