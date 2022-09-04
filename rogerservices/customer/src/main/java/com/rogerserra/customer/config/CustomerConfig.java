@@ -1,5 +1,7 @@
 package com.rogerserra.customer.config;
 
+import com.rogerserra.clients.notification.NotificationClient;
+import com.rogerserra.clients.notification.NotificationRequest;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,4 +15,5 @@ public class CustomerConfig { // para enviar http requests
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
+
 }

@@ -2,6 +2,8 @@ package com.rogerserra.customer.service;
 
 import com.rogerserra.clients.fraud.FraudCheckResponse;
 import com.rogerserra.clients.fraud.FraudClient;
+import com.rogerserra.clients.notification.NotificationClient;
+import com.rogerserra.clients.notification.NotificationRequest;
 import com.rogerserra.customer.entity.Customer;
 import com.rogerserra.customer.entity.record.CustomerRegistrationRequest;
 import com.rogerserra.customer.repository.CustomerRepository;
@@ -15,6 +17,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -36,6 +39,15 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: send notification
+        // todo: make it async -> add to queue
+
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi %s, nice to meet you!", customer.getFirstName())
+                )
+        );
+
     }
 }
