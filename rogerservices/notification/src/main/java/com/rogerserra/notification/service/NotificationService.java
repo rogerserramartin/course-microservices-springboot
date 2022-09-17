@@ -22,7 +22,7 @@ public class NotificationService {
                 .message(notificationRequest.message())
                 .sentAt(LocalDateTime.now())
                 .build();
-        notificationRepository.save(notification);
+        notificationRepository.save(notification); // podriamos enviar por twilio a continuacion
     }
 
 

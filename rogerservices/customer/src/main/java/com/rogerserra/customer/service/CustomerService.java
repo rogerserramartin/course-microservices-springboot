@@ -1,5 +1,6 @@
 package com.rogerserra.customer.service;
 
+import com.rogerserra.amqp.producer.RabbitMQMessageProducer;
 import com.rogerserra.clients.fraud.FraudCheckResponse;
 import com.rogerserra.clients.fraud.FraudClient;
 import com.rogerserra.clients.notification.NotificationClient;
@@ -15,9 +16,8 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
     private final FraudClient fraudClient;
-    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -39,15 +39,23 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: make it async -> add to queue
-
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hi %s, nice to meet you!", customer.getFirstName())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, nice to meet you!", customer.getFirstName())
         );
+
+        // es lo que haciamos en el main de Notification con el CommandlineRunner
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key");
+        /* ya no hace falta, ahora enviamos a una cola de mensajeria
+        notificationClient.sendNotification(
+                notificationRequest
+        );
+        */
+
 
     }
 }
