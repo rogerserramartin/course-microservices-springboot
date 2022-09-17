@@ -1,0 +1,4 @@
+com\rogerserra\clients\notification\NotificationClient.class
+com\rogerserra\clients\notification\NotificationRequest.class
+com\rogerserra\clients\fraud\FraudCheckResponse.class
+com\rogerserra\clients\fraud\FraudClient.class
