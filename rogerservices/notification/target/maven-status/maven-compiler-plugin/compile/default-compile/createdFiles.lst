@@ -1,0 +1,8 @@
+com\rogerserra\notification\service\NotificationService.class
+com\rogerserra\notification\entity\Notification.class
+com\rogerserra\notification\rabbitmq\NotificationConsumer.class
+com\rogerserra\notification\repository\NotificationRepository.class
+com\rogerserra\notification\controller\NotificationController.class
+com\rogerserra\notification\config\NotificationConfig.class
+com\rogerserra\notification\NotificationApplication.class
+com\rogerserra\notification\entity\Notification$NotificationBuilder.class

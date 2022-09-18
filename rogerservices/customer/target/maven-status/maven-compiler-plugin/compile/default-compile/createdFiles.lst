@@ -1,0 +1,8 @@
+com\rogerserra\customer\entity\Customer$CustomerBuilder.class
+com\rogerserra\customer\repository\CustomerRepository.class
+com\rogerserra\customer\controller\CustomerController.class
+com\rogerserra\customer\CustomerApplication.class
+com\rogerserra\customer\service\CustomerService.class
+com\rogerserra\customer\entity\Customer.class
+com\rogerserra\customer\entity\record\CustomerRegistrationRequest.class
+com\rogerserra\customer\config\CustomerConfig.class

@@ -1,0 +1,6 @@
+com\rogerserra\fraud\entity\FraudCheckHistory$FraudCheckHistoryBuilder.class
+com\rogerserra\fraud\service\FraudCheckService.class
+com\rogerserra\fraud\repository\FraudCheckHistoryRepository.class
+com\rogerserra\fraud\entity\FraudCheckHistory.class
+com\rogerserra\fraud\controller\FraudController.class
+com\rogerserra\fraud\FraudApplication.class
